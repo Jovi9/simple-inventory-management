@@ -9,8 +9,17 @@ using System.Threading.Tasks;
 
 namespace simple_inventory_management_console.Functions
 {
+    /// <summary>
+    /// THis class is the one that will communicate to the database server to perfrom operations such as adding, updating and removing data. This class inherits the the Connection class.
+    /// </summary>
     public class InventoryManager : Connection
     {
+        /// <summary>
+        /// This function returns a boolean value if the product is successfully added or not. It accepts one parameter which is the instance of Product class. This function performs the insert operation to the table and uses a parameterized query to prevent SQL Injection. And will also throw an exception if the product id that will be inserted is already added into the products table.
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public bool AddProduct(Product product)
         {
             try
@@ -40,6 +49,11 @@ namespace simple_inventory_management_console.Functions
             return false;
         }
 
+        /// <summary>
+        /// This function also returns a boolean value whether the product is successfuly removed or not. And this accepts one parameter which is the product id. And also uses a parameterized query.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public bool RemoveProduct(int productId)
         {
             using (var connection = GetConnection())
@@ -55,6 +69,12 @@ namespace simple_inventory_management_console.Functions
             }
         }
 
+        /// <summary>
+        /// This function updates the quantity of the specific product and will return a boolean value whether the quantity is successfully updated or not. THis accepts two parameteres which is the product id and the new quantity of the product. And also uses parameterized query.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="newQuantity"></param>
+        /// <returns></returns>
         public bool UpdateProduct(int productId, int newQuantity)
         {
             using (var connection = GetConnection())
@@ -71,6 +91,11 @@ namespace simple_inventory_management_console.Functions
             }
         }
 
+
+        /// <summary>
+        /// This function retrieves all the products stored in the products table. THe retrieved records are stored in Dictionary which will be used to access the retrieved records. THe dictionary value is the instance of the Product class, so each Product retrieved will be stored in the Dictionary. After retrieving all the products, the dictionary will be returned and if no products is available in the inventory this function will return an empty dictionary.
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<int, Product> ListProducts()
         {
             Dictionary<int, Product> products = new Dictionary<int, Product>();
@@ -100,6 +125,10 @@ namespace simple_inventory_management_console.Functions
             return products;
         }
 
+        /// <summary>
+        /// This function calculates the total inventory value quantity * price of each product. And returns the grand total.
+        /// </summary>
+        /// <returns></returns>
         public int GetTotalValue()
         {
             using (var connection = GetConnection())
@@ -113,6 +142,11 @@ namespace simple_inventory_management_console.Functions
             }
         }
 
+        /// <summary>
+        /// This function is used to check whether the product is already added in the inventory or not, this will return a boolean value if the product is found or no. This accepts one paramtere which is the product id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool CheckProductId(int id)
         {
             using (var connection = GetConnection())

@@ -8,7 +8,8 @@ namespace simple_inventory_management_console.Models
 {
 
     /// <summary>
-    /// 
+    /// This class have four properties Id, Name, Quantity and Price.
+    /// The Id, Quantity, and Price have a conditional statement that will check whether the value that will be set is a non-negative number. This is to ensure that the values are valid in each fields. If the value is a negative number then the program will throw an exception.
     /// </summary>
     public class Product
     {
@@ -24,7 +25,7 @@ namespace simple_inventory_management_console.Models
         public int QuantityInStock
         {
             get => _quantity;
-            set => _quantity = value > 0 ? value : throw new Exception("Quantity cannot be negative.");
+            set => _quantity = value >= 0 ? value : throw new Exception("Quantity cannot be negative.");
         }
 
         private decimal _price;
